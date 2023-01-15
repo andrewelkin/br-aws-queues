@@ -22,7 +22,7 @@ The server keeps the order of entries it receives.
 │   └── server-queue.go      -- server queue (based on the ordered map)
 ├── readme.md                      -- this file
 └── server
-    └── server.go                   -- server main()
+    └── server.go                  -- server main()
 
 ```
 
@@ -57,6 +57,9 @@ and performs the actual operation on the internal queue.
 
 For the operations GetItem and GetAll (opcodes '?' and '*') the server forms a response and 
 sends the response back to the client via client's SQS queue.
+
+Server writes output messages to stdout as well as to ./server.log
+
 
 ### Network format (from clients to the server)
 

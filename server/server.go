@@ -6,6 +6,7 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
+	"io"
 	"log"
 	"os"
 
@@ -54,6 +55,14 @@ func main() {
 			Region: awsRegion,
 		},
 	})
+
+	f, err := os.OpenFile("./server.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		log.Fatalf("error opening log file: %v", err)
+	}
+	wrt := io.MultiWriter(os.Stdout, f)
+	log.SetOutput(wrt)
+	defer f.Close()
 
 	if err != nil {
 		fmt.Printf("Error initializing new session (profile %s region %s) : %v", *awsProfile, *awsRegion, err)
