@@ -77,11 +77,12 @@ func (h *AWSHelper) SendAWSMessage(queueUrl string, messageBody string) error {
 }
 
 // GetAWSMessages receives one or more messages from the queue
-func (h *AWSHelper) GetAWSMessages(queueUrl string, maxMessages int64) (*sqs.ReceiveMessageOutput, error) {
+func (h *AWSHelper) GetAWSMessages(queueUrl string, maxMessages int64, toutSeconds int64) (*sqs.ReceiveMessageOutput, error) {
 
 	msgResult, err := h.sqsClient.ReceiveMessage(&sqs.ReceiveMessageInput{
 		QueueUrl:            &queueUrl,
 		MaxNumberOfMessages: aws.Int64(maxMessages),
+		WaitTimeSeconds:     aws.Int64(toutSeconds),
 	})
 
 	if err != nil {

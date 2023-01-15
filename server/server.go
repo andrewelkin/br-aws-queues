@@ -14,12 +14,13 @@ import (
 )
 
 const DEBUG = true
+const MAX_TIMOUT_SEC = 20
 
 // reader is the main loop reading messages rom AWS queue
 func reader(helper *aws_helper.AWSHelper, queueUrl string, maxMessages int64, proc processor.QProcessor) {
 
 	for {
-		result, err := helper.GetAWSMessages(queueUrl, maxMessages)
+		result, err := helper.GetAWSMessages(queueUrl, maxMessages, MAX_TIMOUT_SEC)
 		if err != nil {
 			log.Panicf("Critical error reading from aws queue: %v", err)
 		}

@@ -20,7 +20,7 @@ import (
 func reader(helper *aws_helper.AWSHelper, queueUrl string, maxMessages int64) {
 
 	for {
-		result, err := helper.GetAWSMessages(queueUrl, maxMessages)
+		result, err := helper.GetAWSMessages(queueUrl, maxMessages, 20)
 		if err != nil {
 			log.Panicf("Critical error reading from aws queue: %v", err)
 		}
