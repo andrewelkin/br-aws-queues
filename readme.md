@@ -43,11 +43,11 @@ from the clients:
 
 ### How the server works
 
-The server creates a SQS queue (command line arg 'qname', default 'bl-test-queue')) and
+The server creates a SQS queue (command line parameter 'qname', default name is 'bl-test-queue')) and
 awaits for messages. When one or more messages arrive, the server 
 calls interface method 
 ```ProcPayload(string)``` of the initialized payload processor.
-cmd line arg 'threads' defines number of threads in the payload processor (default 3).
+cmd line arg 'threads' defines number of threads in the payload processor (default is 3).
 
 Multithreaded payload processor creates a pool of go-routine workers
 when initialized. One of the worker threads takes a message and processes
@@ -124,13 +124,24 @@ _GetAllItems_:
 "threads"  --   Number of threads processing payload (default: 3)
 ```
 
+Example:
+```
+./server -profile=default -region=us-east-1 -threads=8
+```
+
 ### Clients command line flags 
 
 ```
 "profile"  --   Sets aws profile name (default: "default" 
 "region"   --   Sets AWS region  (default: "eu-west-1")
-"qname",   --   Server's SQS queue name ("bl-test-queue")
+"qname"   --   Server's SQS queue name ("bl-test-queue")
 ```
+
+Example:
+```
+./client -profile=default -region=us-east-1 -qname=myserversqs
+```
+
 
 ### Compiling and running
 
@@ -144,7 +155,10 @@ go build -o server server/server.go
 to run:
 
 ```
+Server:
 server/server
+
+Client:
 client/client
 ```
 
